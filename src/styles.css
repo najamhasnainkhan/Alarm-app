@@ -1,0 +1,340 @@
+:root {
+  --bg: #050816;
+  --bg-card: #0b1020;
+  --border-subtle: #22263a;
+  --accent: #4f46e5;
+  --accent-soft: rgba(79, 70, 229, 0.16);
+  --accent-strong: #a855f7;
+  --text-main: #f9fafb;
+  --text-muted: #9ca3af;
+  --danger: #ef4444;
+  --radius-lg: 12px;
+  --shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.75);
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-sans);
+  background: radial-gradient(circle at top left, #111827 0, #020617 40%, #000000 100%);
+  color: var(--text-main);
+}
+
+.app-root {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px 40px;
+}
+
+.app-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 2.1rem;
+  letter-spacing: 0.03em;
+}
+
+.app-subtitle {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.app-main {
+  display: grid;
+  gap: 18px;
+}
+
+@media (min-width: 840px) {
+  .app-main {
+    grid-template-columns: 1.1fr 1fr;
+    align-items: flex-start;
+  }
+
+  .app-main > .card:nth-child(3) {
+    grid-column: 1 / -1;
+  }
+}
+
+.card {
+  background: radial-gradient(circle at top left, rgba(79, 70, 229, 0.12), transparent 55%),
+    var(--bg-card);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-soft);
+  padding: 18px 18px 16px;
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.1rem;
+}
+
+.clock-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 12px 8px;
+}
+
+.clock-time {
+  font-size: clamp(2.4rem, 6vw, 3.1rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+
+.clock-meta {
+  margin-top: 6px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.alarm-form {
+  display: grid;
+  gap: 12px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field-label {
+  font-size: 0.9rem;
+}
+
+.field-input {
+  border-radius: 8px;
+  border: 1px solid #374151;
+  background: #020617;
+  color: var(--text-main);
+  padding: 8px 10px;
+  font-size: 0.95rem;
+}
+
+.field-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+
+.field-input:disabled {
+  opacity: 0.8;
+}
+
+.field-help {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.primary-button,
+.secondary-button {
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  padding: 7px 14px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: white;
+}
+
+.primary-button:hover {
+  filter: brightness(1.05);
+}
+
+.secondary-button {
+  background: rgba(15, 23, 42, 0.9);
+  color: var(--text-muted);
+  border: 1px solid #374151;
+}
+
+.secondary-button:hover {
+  background: rgba(31, 41, 55, 0.95);
+}
+
+.alarm-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.alarm-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #1f2937;
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.alarm-item--ringing {
+  background: rgba(248, 250, 252, 0.06);
+  border-color: var(--accent-strong);
+  box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.9), 0 0 18px rgba(168, 85, 247, 0.75);
+}
+
+.alarm-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.alarm-time {
+  font-weight: 600;
+}
+
+.alarm-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.alarm-meta {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* World time browser */
+.world-time-browser {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.world-time-header {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+@media (min-width: 720px) {
+  .world-time-header {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+
+  .world-time-search {
+    min-width: 260px;
+  }
+}
+
+.world-time-subtitle {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.world-time-list {
+  max-height: 420px;
+  overflow: auto;
+  padding-right: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.world-time-country {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.85);
+  border: 1px solid #1f2937;
+}
+
+.world-time-country-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.world-time-country-name {
+  font-weight: 600;
+}
+
+.world-time-country-code {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.world-time-zones {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.world-time-zone-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.world-time-zone-label {
+  color: var(--text-muted);
+}
+
+.world-time-zone-time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+}
+
+.card-full-width {
+  grid-column: 1 / -1;
+}
+
+.active-alarm-banner {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--accent-strong);
+  background: radial-gradient(circle at top left, rgba(168, 85, 247, 0.28), transparent 55%),
+    rgba(15, 23, 42, 0.98);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.active-alarm-text {
+  font-size: 0.9rem;
+}
+
+.active-alarm-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
